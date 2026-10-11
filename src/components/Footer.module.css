@@ -1,0 +1,88 @@
+.footer {
+  position: relative;
+  min-height: calc(496 * var(--u));
+  padding: calc(120 * var(--u)) calc(128 * var(--u)) calc(70 * var(--u));
+  background: #302b22;
+  color: #fff;
+}
+.soil {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.footer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #0004;
+}
+.slogan,
+.bottom {
+  position: relative;
+  z-index: 1;
+}
+.slogan {
+  font-size: calc(64 * var(--u));
+  text-align: center;
+  margin-bottom: calc(60 * var(--u));
+}
+.bottom {
+  display: flex;
+  align-items: center;
+  gap: calc(80 * var(--u));
+}
+.logo {
+  width: calc(170 * var(--u));
+}
+.caption {
+  font-family: 'Abhaya Libre', serif;
+  font-size: max(14px, calc(36 * var(--u)));
+}
+.socials {
+  display: flex;
+  align-items: center;
+  gap: calc(25 * var(--u));
+  margin-left: auto;
+}
+.socials img {
+  width: calc(65 * var(--u));
+  height: calc(65 * var(--u));
+  object-fit: contain;
+}
+.socials a {
+  display: flex;
+  min-width: 32px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 767px) {
+  .footer {
+    padding: 40px 24px;
+  }
+  .slogan {
+    font-size: 26px;
+  }
+  .bottom {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .logo {
+    width: 70px;
+  }
+  .caption {
+    flex: 1;
+  }
+  .socials {
+    width: 100%;
+    justify-content: space-between;
+    margin: 0;
+    gap: 8px;
+  }
+  .socials img {
+    width: 28px;
+    height: 28px;
+  }
+}

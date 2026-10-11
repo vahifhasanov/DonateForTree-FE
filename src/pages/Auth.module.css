@@ -1,0 +1,155 @@
+.page {
+  position: relative;
+  display: grid;
+  grid-template-columns: calc(670 * var(--u)) calc(766 * var(--u));
+  gap: calc(153 * var(--u));
+  min-height: calc(1218 * var(--u));
+  padding: calc(89 * var(--u)) calc(161 * var(--u)) calc(89 * var(--u))
+    calc(170 * var(--u));
+  background: var(--page-background);
+}
+.welcome {
+  padding-top: calc(152 * var(--u));
+}
+.welcome h1 {
+  font-size: calc(128 * var(--u));
+  line-height: 1.22;
+  font-weight: 500;
+}
+.welcome p {
+  margin: calc(18 * var(--u)) 0 0 calc(14 * var(--u));
+  color: #7c7b7b;
+  font-size: calc(44 * var(--u));
+  line-height: 1.22;
+  font-weight: 500;
+}
+.card {
+  padding: calc(83 * var(--u)) calc(78 * var(--u)) calc(70 * var(--u));
+  background: #fff;
+  border-radius: calc(54 * var(--u));
+}
+.card h2 {
+  font-size: calc(80 * var(--u));
+  font-weight: 500;
+  margin-bottom: calc(72 * var(--u));
+}
+.fields {
+  display: grid;
+  gap: calc(65 * var(--u));
+}
+.forgot {
+  display: block;
+  margin: calc(54 * var(--u)) 0 0 auto;
+  padding: 0;
+  min-height: 32px;
+  border: 0;
+  background: transparent;
+  color: #2253f3;
+  text-decoration: underline;
+  font-size: max(14px, calc(30 * var(--u)));
+  font-weight: 500;
+}
+.submit {
+  width: 100%;
+  margin-top: calc(86 * var(--u));
+  height: calc(114 * var(--u));
+}
+.switch {
+  margin-top: calc(34 * var(--u));
+  text-align: center;
+  color: var(--muted);
+  font-size: max(13px, calc(32 * var(--u)));
+}
+.switch a {
+  font-size: 0.95em;
+  font-weight: 500;
+}
+.demo {
+  color: #454545;
+  margin-top: 16px;
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}
+.plant {
+  position: absolute;
+  bottom: 0;
+  left: calc(184 * var(--u));
+  width: calc(170 * var(--u));
+  height: calc(170 * var(--u));
+  object-fit: contain;
+}
+.signup {
+  min-height: calc(1579 * var(--u));
+}
+.signup .submit {
+  margin-top: calc(109 * var(--u));
+}
+.dialog {
+  max-width: min(440px, calc(100% - 40px));
+  border: 0;
+  border-radius: 20px;
+  padding: 30px;
+}
+.dialog::backdrop {
+  background: #0006;
+}
+.dialog h2 {
+  font-size: 26px;
+  margin-bottom: 18px;
+}
+.dialog p {
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+.dialog button {
+  font-size: 18px;
+}
+@media (max-width: 767px) {
+  .page {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    min-height: calc(100vh - 64px);
+    padding: 32px 24px 90px;
+  }
+  .welcome {
+    padding: 0;
+  }
+  .welcome h1 {
+    font-size: clamp(40px, 10vw, 64px);
+  }
+  .welcome p {
+    font-size: 18px;
+    margin: 12px 0 0;
+  }
+  .card {
+    padding: 28px 24px;
+    border-radius: 24px;
+  }
+  .card h2 {
+    font-size: 32px;
+    margin-bottom: 28px;
+  }
+  .fields {
+    gap: 24px;
+  }
+  .forgot {
+    margin-top: 20px;
+  }
+  .submit,
+  .signup .submit {
+    margin-top: 28px;
+    height: 52px;
+  }
+  .switch {
+    font-size: 13px;
+    margin-top: 20px;
+    line-height: 1.6;
+  }
+  .plant {
+    width: 60px;
+    height: 60px;
+    left: 24px;
+  }
+}

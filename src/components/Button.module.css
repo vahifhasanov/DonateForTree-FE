@@ -1,0 +1,21 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: calc(18 * var(--u)) calc(32 * var(--u));
+  border: 0;
+  border-radius: calc(39 * var(--u));
+  background: var(--button);
+  color: #fff;
+  font-size: max(20px, calc(52 * var(--u)));
+  font-weight: 500;
+  text-decoration: none;
+  text-align: center;
+}
+.button:hover {
+  background: #555;
+}
+.button:disabled {
+  opacity: 0.85;
+}

@@ -1,0 +1,44 @@
+.intro {
+  position: relative;
+  padding: calc(60 * var(--u)) calc(73 * var(--u)) calc(32 * var(--u));
+}
+.intro h1 {
+  font-size: calc(128 * var(--u));
+  line-height: 1.22;
+  font-weight: 500;
+}
+.intro p {
+  max-width: calc(830 * var(--u));
+  margin: calc(18 * var(--u)) 0 0 calc(22 * var(--u));
+  font-size: calc(44 * var(--u));
+  line-height: 1.22;
+  font-weight: 500;
+  color: #7c7b7b;
+}
+.intro img {
+  position: absolute;
+  right: 9%;
+  bottom: 0;
+  width: calc(170 * var(--u));
+  height: calc(170 * var(--u));
+  object-fit: contain;
+}
+@media (max-width: 767px) {
+  .intro {
+    padding: 34px 24px 26px;
+  }
+  .intro h1 {
+    font-size: clamp(38px, 9vw, 62px);
+  }
+  .intro p {
+    font-size: 18px;
+    max-width: 80%;
+    margin-left: 0;
+    margin-top: 12px;
+  }
+  .intro img {
+    width: 54px;
+    height: 54px;
+    right: 20px;
+  }
+}
