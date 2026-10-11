@@ -36,10 +36,25 @@
   top: 50%;
   right: 6px;
   transform: translateY(-50%);
-  min-height: 40px;
+  min-height: 44px;
+  min-width: 44px;
   padding: 6px;
   border: 0;
   background: transparent;
   color: #555;
   font-size: 12px;
+}
+@media (max-width: 900px) {
+  .field label {
+    margin-bottom: 12px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .control input,
+  .control select {
+    height: 48px;
+    padding: 0 12px;
+    font-size: 16px;
+    border-radius: 10px;
+  }
 }

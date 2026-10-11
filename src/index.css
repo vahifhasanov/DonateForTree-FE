@@ -9,7 +9,7 @@
   font-synthesis: none;
   color: #000;
   background: #fff;
-  --u: clamp(0.4px, 0.052083333vw, 1px);
+  --u: min(0.052083333cqw, 1px);
   --green: #00ad4e;
   --teal: #1f5d5e;
   --muted: #767676;
@@ -70,7 +70,7 @@ fieldset {
   background: #c0e8d0;
   color: #000;
 }
-@media (max-width: 767px) {
+@media (max-width: 900px) {
   :root {
     --u: 0.55px;
   }

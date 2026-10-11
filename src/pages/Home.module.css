@@ -23,16 +23,23 @@
   line-height: 1.22;
 }
 .heading > a {
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-color: #2253f3;
+  text-underline-offset: 4px;
 }
 .heading > a:hover {
   text-decoration: underline;
   text-decoration-color: #2253f3;
 }
-.heading span {
+.heading > span {
   display: flex;
   align-items: center;
   gap: calc(54 * var(--u));
+}
+.heading > span > span {
+  text-decoration: underline;
+  text-decoration-color: #2253f3;
+  text-underline-offset: 4px;
 }
 .arrowLink {
   display: inline-flex;
@@ -49,7 +56,7 @@
 }
 .treeLink {
   position: absolute;
-  z-index: 25;
+  z-index: 10;
   width: calc(698 * var(--u));
   height: calc(845 * var(--u));
   left: 32.24%;
@@ -141,11 +148,11 @@
 }
 .tracking {
   position: relative;
-  height: calc(580 * var(--u));
+  min-height: calc(580 * var(--u));
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: calc(154 * var(--u)) calc(73 * var(--u)) 0;
+  padding: calc(154 * var(--u)) calc(73 * var(--u)) calc(120 * var(--u));
   background: #fff;
 }
 .tracking h2 {
@@ -184,10 +191,10 @@
 }
 .about {
   position: relative;
-  height: calc(551 * var(--u));
+  min-height: calc(551 * var(--u));
   display: flex;
   justify-content: flex-end;
-  padding: calc(78 * var(--u)) calc(100 * var(--u)) 0;
+  padding: calc(78 * var(--u)) calc(100 * var(--u)) calc(60 * var(--u));
   background: #bfd5df;
 }
 .flag {
@@ -212,7 +219,7 @@
   font-size: max(12px, calc(24 * var(--u)));
   line-height: 1.4;
 }
-@media (max-width: 767px) {
+@media (max-width: 900px) {
   .hero {
     height: 440px;
     overflow: hidden;
@@ -224,13 +231,13 @@
     font-size: clamp(28px, 7.5vw, 48px);
     padding: 65px 0 0 24px;
   }
-  .heading span {
+  .heading > span {
     gap: 18px;
   }
   .treeLink {
     z-index: 4;
-    left: 40%;
-    width: 58%;
+    left: 44%;
+    width: 54%;
     height: 340px;
     bottom: 0;
   }
@@ -252,12 +259,13 @@
     font-size: 18px;
   }
   .info ul {
-    max-width: 58%;
+    max-width: 55%;
     margin-top: 28px;
   }
   .info li {
     margin: 22px 0;
-    font-size: 12px;
+    font-size: 14px;
+    line-height: 1.5;
   }
   .people {
     width: 45%;
@@ -272,9 +280,9 @@
     height: auto;
     min-height: 260px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    padding: 36px 24px 70px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 24px 16px;
+    padding: 36px 24px 48px;
   }
   .tracking h2 {
     font-size: 22px;
@@ -284,11 +292,13 @@
     min-height: 44px;
     font-size: 18px;
     align-self: center;
+    padding: 12px 18px;
   }
   .count {
     grid-column: 1 / -1;
     margin: 0;
     font-size: 27px;
+    padding-bottom: 40px;
   }
   .count img {
     width: 70px;
@@ -299,7 +309,7 @@
   .about {
     height: auto;
     min-height: 410px;
-    padding: 32px 24px 210px;
+    padding: 32px 24px 240px;
   }
   .about > div {
     width: 100%;

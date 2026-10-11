@@ -18,6 +18,9 @@
   color: var(--green);
   text-decoration: none;
 }
+.header[data-home='true'] {
+  background: transparent;
+}
 .logo span:first-child {
   position: absolute;
   top: calc(6 * var(--u));
@@ -43,6 +46,9 @@
 }
 .navigation > a,
 .auth a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   text-decoration: none;
   white-space: nowrap;
 }
@@ -53,9 +59,6 @@
   text-decoration: underline;
   text-decoration-color: var(--green);
   text-underline-offset: 7px;
-}
-.navigation[data-home='true'] > a:nth-child(3) {
-  margin-right: calc(370 * var(--u));
 }
 .auth {
   display: flex;
@@ -74,6 +77,16 @@
 .profile {
   position: relative;
   margin-left: calc(140 * var(--u));
+}
+.profile summary > span:last-child {
+  width: 0.45em;
+  height: 0.45em;
+  border-right: 0.1em solid;
+  border-bottom: 0.1em solid;
+  transform: translateY(-0.15em) rotate(45deg);
+  font-size: inherit;
+  color: transparent;
+  border-color: #000;
 }
 .profile summary {
   display: flex;
@@ -132,7 +145,19 @@
 .toggle {
   display: none;
 }
-@media (min-width: 768px) and (max-width: 1100px) {
+@media (min-width: 901px) {
+  .navigation[data-home='true'] {
+    display: grid;
+    grid-template-columns:
+      calc(186 * var(--u)) calc(169 * var(--u)) minmax(0, 1fr)
+      calc(267 * var(--u)) auto;
+    gap: 0;
+  }
+  .navigation[data-home='true'] .auth {
+    gap: calc(60 * var(--u));
+  }
+}
+@media (min-width: 901px) and (max-width: 1100px) {
   .navigation {
     gap: 18px;
     padding-right: 8px;
@@ -143,15 +168,15 @@
   .profile {
     margin-left: 20px;
   }
-  .navigation[data-home='true'] > a:nth-child(3) {
-    margin-right: calc(200 * var(--u));
-  }
 }
-@media (max-width: 767px) {
+@media (max-width: 900px) {
   .header {
     height: 64px;
     padding: 0 20px;
     justify-content: space-between;
+  }
+  .header[data-home='true'] {
+    background: #fff;
   }
   .logo {
     width: 54px;
@@ -188,9 +213,6 @@
   }
   .navigation > a {
     padding: 12px 0;
-  }
-  .navigation[data-home='true'] > a:nth-child(3) {
-    margin-right: 0;
   }
   .auth {
     gap: 24px;

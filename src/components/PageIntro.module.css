@@ -19,11 +19,11 @@
   position: absolute;
   right: 9%;
   bottom: 0;
-  width: calc(170 * var(--u));
-  height: calc(170 * var(--u));
+  width: var(--intro-plant-size, calc(170 * var(--u)));
+  height: var(--intro-plant-size, calc(170 * var(--u)));
   object-fit: contain;
 }
-@media (max-width: 767px) {
+@media (max-width: 900px) {
   .intro {
     padding: 34px 24px 26px;
   }

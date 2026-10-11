@@ -1,5 +1,8 @@
 .page {
-  min-height: calc(1579 * var(--u));
+  min-height: max(
+    calc(100svh - max(60px, 115 * var(--u))),
+    calc(1579 * var(--u))
+  );
   background: var(--page-background);
   padding-bottom: calc(57 * var(--u));
 }
@@ -82,11 +85,11 @@
 }
 .species .option {
   min-height: calc(191 * var(--u));
-  padding: 0;
+  padding: calc(10 * var(--u));
 }
 .species img {
-  width: calc(185 * var(--u));
-  height: calc(185 * var(--u));
+  width: calc(165 * var(--u));
+  height: calc(165 * var(--u));
   object-fit: contain;
 }
 .region {
@@ -129,20 +132,21 @@
     sans-serif;
 }
 .notice > span {
+  flex-shrink: 0;
   font-size: 32px;
   color: var(--green);
 }
 .submit {
   display: flex;
   width: 80%;
-  height: calc(114 * var(--u));
+  min-height: calc(114 * var(--u));
   margin: calc(52 * var(--u)) auto 0;
   background: #625f5f;
   font-size: max(20px, calc(46 * var(--u)));
 }
-@media (max-width: 767px) {
+@media (max-width: 900px) {
   .page {
-    min-height: calc(100vh - 64px);
+    min-height: calc(100svh - 64px);
     padding-bottom: 24px;
   }
   .card {
@@ -157,6 +161,30 @@
   }
   .option {
     min-height: 90px;
+    padding: 10px 8px;
+  }
+  .option > span,
+  .customLabel {
+    font-size: 20px;
+  }
+  .option small,
+  .custom {
+    font-size: 16px;
+  }
+  .custom {
+    width: 100%;
+    justify-content: center;
+    gap: 6px;
+  }
+  .custom input {
+    width: 60px;
+    min-width: 0;
+    max-width: 65%;
+    height: 30px;
+  }
+  .species img {
+    width: 88px;
+    height: 88px;
   }
   .species .option {
     min-height: 100px;
@@ -190,5 +218,17 @@
     width: 100%;
     margin-top: 24px;
     min-height: 52px;
+    font-size: 20px;
+  }
+}
+@media (min-width: 601px) and (max-width: 900px) {
+  .amounts,
+  .species {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .region {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 24px;
   }
 }

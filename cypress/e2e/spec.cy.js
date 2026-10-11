@@ -18,12 +18,82 @@ function checkLayout() {
         image.getAttribute('src'),
       ).to.equal(true)
     })
+    // A page can have no horizontal scroll while text still spills out of a button.
+    doc.querySelectorAll('button, a[class*="_button_"]').forEach((control) => {
+      if (!control.checkVisibility()) return
+      const bounds = control.getBoundingClientRect()
+      const text = doc.createRange()
+      text.selectNodeContents(control)
+      for (const rect of text.getClientRects()) {
+        expect(rect.left, `${control.textContent.trim()} left`).to.be.at.least(
+          bounds.left - 1,
+        )
+        expect(rect.right, `${control.textContent.trim()} right`).to.be.at.most(
+          bounds.right + 1,
+        )
+        expect(rect.top, `${control.textContent.trim()} top`).to.be.at.least(
+          bounds.top - 1,
+        )
+        expect(
+          rect.bottom,
+          `${control.textContent.trim()} bottom`,
+        ).to.be.at.most(bounds.bottom + 1)
+      }
+    })
+    doc.querySelectorAll('nav a').forEach((link) => {
+      if (!link.checkVisibility()) return
+      const rect = link.getBoundingClientRect()
+      const hit = doc.elementFromPoint(
+        rect.left + rect.width / 2,
+        rect.top + rect.height / 2,
+      )
+      expect(
+        link.contains(hit),
+        `${link.textContent.trim()} is not covered`,
+      ).to.equal(true)
+    })
+    const custom = doc.querySelector('input[aria-label="Custom amount in UAH"]')
+    if (custom) {
+      const option = custom.parentElement.parentElement.getBoundingClientRect()
+      const input = custom.getBoundingClientRect()
+      expect(input.left).to.be.at.least(option.left)
+      expect(input.right).to.be.at.most(option.right)
+    }
+    const map = doc.querySelector('[aria-label^="Static map of Ukraine"]')
+    if (map) {
+      const frame = map.getBoundingClientRect()
+      const image = map.querySelector('img').getBoundingClientRect()
+      expect(image.left).to.be.at.most(frame.left)
+      expect(image.right).to.be.at.least(frame.right)
+      expect(image.bottom).to.be.at.least(frame.bottom)
+      map.querySelectorAll('span').forEach((marker) => {
+        const rect = marker.getBoundingClientRect()
+        expect(rect.left).to.be.at.least(frame.left)
+        expect(rect.right).to.be.at.most(frame.right)
+        expect(rect.top).to.be.at.least(frame.top)
+        expect(rect.bottom).to.be.at.most(frame.bottom)
+      })
+    }
+    const about = doc.querySelector('#about-heading')?.closest('section')
+    if (about) {
+      const end = about.getBoundingClientRect().bottom
+      about.querySelectorAll('p').forEach((paragraph) => {
+        expect(paragraph.getBoundingClientRect().bottom).to.be.at.most(end)
+      })
+    }
+  })
+  cy.window().then((win) => {
+    expect(win.visualViewport.scale, 'browser zoom is 100%').to.equal(1)
   })
 }
 describe('Design pages and responsive layout', () => {
   ;[
     [1920, 1080],
+    [1440, 900],
+    [1280, 800],
     [1024, 900],
+    [901, 900],
+    [900, 900],
     [768, 1024],
     [390, 844],
     [320, 740],
@@ -40,7 +110,7 @@ describe('Design pages and responsive layout', () => {
           )
         })
         checkLayout()
-        if (width === 1920 || width === 390)
+        if ([1920, 1440, 1280, 768, 390, 320].includes(width))
           cy.screenshot(`${width}-${path === '/' ? 'home' : path.slice(1)}`, {
             capture: 'fullPage',
           })

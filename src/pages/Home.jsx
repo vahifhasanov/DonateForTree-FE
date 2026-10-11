@@ -17,7 +17,7 @@ export default function Home() {
         <h1 id="home-heading" className={styles.heading}>
           <Link to="/login">LOGIN</Link>
           <span>
-            or{' '}
+            <span>or</span>{' '}
             <Link
               className={styles.arrowLink}
               to="/signup"

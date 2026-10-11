@@ -14,7 +14,11 @@ export default function Header() {
     }
   }
   return (
-    <header className={styles.header} onKeyDown={closeWithEscape}>
+    <header
+      className={styles.header}
+      data-home={pathname === '/'}
+      onKeyDown={closeWithEscape}
+    >
       <Link className={styles.logo} to="/" aria-label="DonateForTree home">
         <span aria-hidden="true">gas</span>
         <span aria-hidden="true">v</span>

@@ -1,15 +1,23 @@
 .page {
   position: relative;
   display: grid;
-  grid-template-columns: calc(670 * var(--u)) calc(766 * var(--u));
+  grid-template-columns: minmax(0, 670fr) minmax(0, 766fr);
   gap: calc(153 * var(--u));
-  min-height: calc(1218 * var(--u));
+  min-height: max(
+    calc(100svh - max(60px, 115 * var(--u))),
+    calc(1218 * var(--u))
+  );
   padding: calc(89 * var(--u)) calc(161 * var(--u)) calc(89 * var(--u))
     calc(170 * var(--u));
   background: var(--page-background);
 }
 .welcome {
+  min-width: 0;
   padding-top: calc(152 * var(--u));
+}
+.formColumn {
+  min-width: 0;
+  align-self: start;
 }
 .welcome h1 {
   font-size: calc(128 * var(--u));
@@ -52,7 +60,7 @@
 .submit {
   width: 100%;
   margin-top: calc(86 * var(--u));
-  height: calc(114 * var(--u));
+  min-height: calc(114 * var(--u));
 }
 .switch {
   margin-top: calc(34 * var(--u));
@@ -80,10 +88,18 @@
   object-fit: contain;
 }
 .signup {
-  min-height: calc(1579 * var(--u));
+  min-height: max(
+    calc(100svh - max(60px, 115 * var(--u))),
+    calc(1579 * var(--u))
+  );
 }
 .signup .submit {
   margin-top: calc(109 * var(--u));
+}
+.signup .welcome h1 {
+  text-decoration: underline;
+  text-decoration-color: #2253f3;
+  text-underline-offset: 4px;
 }
 .dialog {
   max-width: min(440px, calc(100% - 40px));
@@ -105,13 +121,13 @@
 .dialog button {
   font-size: 18px;
 }
-@media (max-width: 767px) {
+@media (max-width: 900px) {
   .page {
     display: flex;
     flex-direction: column;
     gap: 28px;
-    min-height: calc(100vh - 64px);
-    padding: 32px 24px 90px;
+    min-height: calc(100svh - 64px);
+    padding: 32px clamp(16px, 4vw, 32px) 90px;
   }
   .welcome {
     padding: 0;
@@ -124,8 +140,13 @@
     margin: 12px 0 0;
   }
   .card {
-    padding: 28px 24px;
+    padding: 28px 20px;
     border-radius: 24px;
+  }
+  .formColumn {
+    width: 100%;
+    max-width: 560px;
+    align-self: center;
   }
   .card h2 {
     font-size: 32px;
@@ -140,7 +161,9 @@
   .submit,
   .signup .submit {
     margin-top: 28px;
-    height: 52px;
+    min-height: 52px;
+    height: auto;
+    font-size: 20px;
   }
   .switch {
     font-size: 13px;

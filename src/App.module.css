@@ -1,5 +1,7 @@
 .app {
+  container-type: inline-size;
   max-width: 1920px;
+  min-height: 100svh;
   margin: auto;
 }
 .skipLink {

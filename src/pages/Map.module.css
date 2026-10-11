@@ -1,6 +1,9 @@
 .page {
   position: relative;
-  min-height: calc(1218 * var(--u));
+  min-height: max(
+    calc(100svh - max(60px, 115 * var(--u))),
+    calc(1218 * var(--u))
+  );
   overflow: hidden;
   background: #a6dfc5;
 }
@@ -8,14 +11,17 @@
   position: absolute;
   inset: 0;
 }
-.map > img {
+.mapScene {
   position: absolute;
   top: calc(-20 * var(--u));
   left: 0;
   width: calc(2441 * var(--u));
   height: calc(1252 * var(--u));
-  max-width: none;
-  object-fit: cover;
+  min-height: calc(100% + 20 * var(--u));
+}
+.mapScene > img {
+  width: 100%;
+  height: 100%;
 }
 .map span {
   position: absolute;
@@ -26,24 +32,25 @@
   background: #054323;
   box-shadow: 0 0 12px #0005;
   font-weight: 500;
+  transform: translate(-50%, -50%);
 }
 .large {
-  left: 57.08%;
-  top: calc(287 * var(--u));
+  left: 47.81%;
+  top: 30.19%;
   width: calc(142 * var(--u));
   height: calc(142 * var(--u));
   font-size: calc(64 * var(--u));
 }
 .medium {
-  left: 77.34%;
-  top: calc(410 * var(--u));
+  left: 63.17%;
+  top: 38.9%;
   width: calc(114 * var(--u));
   height: calc(114 * var(--u));
   font-size: calc(48 * var(--u));
 }
 .small {
-  left: 64.48%;
-  top: calc(777 * var(--u));
+  left: 52.17%;
+  top: 66.49%;
   width: calc(71 * var(--u));
   height: calc(71 * var(--u));
   font-size: calc(32 * var(--u));
@@ -59,6 +66,7 @@
   display: flex;
   flex-direction: column;
   gap: calc(45 * var(--u));
+  margin-bottom: calc(50 * var(--u));
 }
 .filters h1 {
   font-size: calc(64 * var(--u));
@@ -83,12 +91,12 @@
   color: #454545;
   line-height: 1.5;
 }
-@media (max-width: 767px) {
+@media (max-width: 900px) {
   .page {
     display: flex;
     flex-direction: column-reverse;
     overflow: visible;
-    min-height: calc(100vh - 64px);
+    min-height: calc(100svh - 64px);
     background: var(--page-background);
     padding: 24px 16px;
     gap: 24px;
@@ -105,6 +113,7 @@
   }
   .filters > button {
     margin-top: 0;
+    font-size: 20px;
   }
   .map {
     position: relative;
@@ -112,29 +121,25 @@
     overflow: hidden;
     border-radius: 24px;
   }
-  .map > img {
-    width: 700px;
-    height: 360px;
+  .mapScene {
+    width: max(700px, calc(100% + 140px));
+    height: auto;
+    min-height: 100%;
+    aspect-ratio: 1197 / 614;
     top: 0;
-    left: -140px;
+    left: min(-140px, calc(100% - 480px));
   }
   .large {
-    left: 30%;
-    top: 95px;
     width: 54px;
     height: 54px;
     font-size: 24px;
   }
   .medium {
-    left: 70%;
-    top: 135px;
     width: 44px;
     height: 44px;
     font-size: 20px;
   }
   .small {
-    left: 48%;
-    top: 250px;
     width: 34px;
     height: 34px;
     font-size: 16px;

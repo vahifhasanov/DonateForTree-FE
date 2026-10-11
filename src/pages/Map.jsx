@@ -10,10 +10,12 @@ export default function Map() {
         role="img"
         aria-label="Static map of Ukraine with demonstration clusters of 52, 34 and 10 trees"
       >
-        <img src={image} alt="" />
-        <span className={styles.large}>52</span>
-        <span className={styles.medium}>34</span>
-        <span className={styles.small}>10</span>
+        <div className={styles.mapScene}>
+          <img src={image} alt="" />
+          <span className={styles.large}>52</span>
+          <span className={styles.medium}>34</span>
+          <span className={styles.small}>10</span>
+        </div>
       </div>
       <form
         className={styles.filters}

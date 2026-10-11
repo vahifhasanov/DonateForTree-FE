@@ -58,7 +58,7 @@
   align-items: center;
   justify-content: center;
 }
-@media (max-width: 767px) {
+@media (max-width: 900px) {
   .footer {
     padding: 40px 24px;
   }
