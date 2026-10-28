@@ -1,0 +1,236 @@
+.header {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  height: calc(115 * var(--u));
+  min-height: 60px;
+  padding: 0 calc(37 * var(--u));
+  background: #fff;
+  box-shadow: 0 calc(20 * var(--u)) calc(53 * var(--u)) calc(10 * var(--u))
+    #0004;
+}
+.logo {
+  position: relative;
+  flex-shrink: 0;
+  width: calc(101 * var(--u));
+  height: calc(108 * var(--u));
+  color: var(--green);
+  text-decoration: none;
+}
+.header[data-home='true'] {
+  background: transparent;
+}
+.logo span:first-child {
+  position: absolute;
+  top: calc(6 * var(--u));
+  left: calc(20 * var(--u));
+  font-size: calc(32 * var(--u));
+}
+.logo span:last-child {
+  position: absolute;
+  top: calc(12 * var(--u));
+  left: 0;
+  font-size: calc(96 * var(--u));
+  line-height: 1;
+}
+.navigation {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(40 * var(--u));
+  padding: 0 calc(36 * var(--u));
+  font-size: max(16px, calc(36 * var(--u)));
+}
+.navigation > a,
+.auth a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.navigation > a:hover {
+  color: var(--green);
+}
+.navigation a[aria-current='page'] {
+  text-decoration: underline;
+  text-decoration-color: var(--green);
+  text-underline-offset: 7px;
+}
+.auth {
+  display: flex;
+  align-items: center;
+  gap: calc(100 * var(--u));
+}
+.login {
+  border: 2px solid #dadada;
+  padding: 0 calc(16 * var(--u));
+}
+.signup {
+  padding: calc(2 * var(--u)) calc(18 * var(--u));
+  color: #fff;
+  background: var(--button);
+}
+.profile {
+  position: relative;
+  margin-left: calc(140 * var(--u));
+}
+.profile summary > span:last-child {
+  width: 0.45em;
+  height: 0.45em;
+  border-right: 0.1em solid;
+  border-bottom: 0.1em solid;
+  transform: translateY(-0.15em) rotate(45deg);
+  font-size: inherit;
+  color: transparent;
+  border-color: #000;
+}
+.profile summary {
+  display: flex;
+  align-items: center;
+  gap: calc(20 * var(--u));
+  list-style: none;
+  cursor: pointer;
+}
+.profile summary::-webkit-details-marker {
+  display: none;
+}
+.person {
+  position: relative;
+  width: calc(48 * var(--u));
+  height: calc(54 * var(--u));
+  min-width: 24px;
+}
+.person::before,
+.person::after {
+  content: '';
+  position: absolute;
+  background: #000;
+  border-radius: 50%;
+}
+.person::before {
+  width: 48%;
+  height: 40%;
+  left: 26%;
+  top: 0;
+}
+.person::after {
+  width: 100%;
+  height: 58%;
+  bottom: 0;
+}
+.profileMenu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 20px);
+  width: 200px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 10px 24px #0002;
+  font-size: 16px;
+}
+.profileMenu p {
+  color: var(--muted);
+  font-size: 13px;
+}
+.profileMenu a {
+  display: block;
+  padding-top: 16px;
+}
+.toggle {
+  display: none;
+}
+@media (min-width: 901px) {
+  .navigation[data-home='true'] {
+    display: grid;
+    grid-template-columns:
+      calc(186 * var(--u)) calc(169 * var(--u)) minmax(0, 1fr)
+      calc(267 * var(--u)) auto;
+    gap: 0;
+  }
+  .navigation[data-home='true'] .auth {
+    gap: calc(60 * var(--u));
+  }
+}
+@media (min-width: 901px) and (max-width: 1100px) {
+  .navigation {
+    gap: 18px;
+    padding-right: 8px;
+  }
+  .auth {
+    gap: 24px;
+  }
+  .profile {
+    margin-left: 20px;
+  }
+}
+@media (max-width: 900px) {
+  .header {
+    height: 64px;
+    padding: 0 20px;
+    justify-content: space-between;
+  }
+  .header[data-home='true'] {
+    background: #fff;
+  }
+  .logo {
+    width: 54px;
+    height: 58px;
+  }
+  .toggle {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 44px;
+    border: 0;
+    background: transparent;
+    padding: 8px;
+  }
+  .toggle span {
+    font-size: 24px;
+  }
+  .navigation {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 64px;
+    background: #fff;
+    padding: 16px 24px 24px;
+    box-shadow: 0 15px 24px #0003;
+    font-size: 18px;
+  }
+  .navigation[data-open='true'] {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+  }
+  .navigation > a {
+    padding: 12px 0;
+  }
+  .auth {
+    gap: 24px;
+    margin-top: 16px;
+  }
+  .auth a {
+    padding: 8px 14px;
+  }
+  .profile {
+    margin: 12px 0 0;
+  }
+  .profile summary {
+    min-height: 44px;
+  }
+  .profileMenu {
+    position: static;
+    margin-top: 12px;
+    width: 100%;
+    box-shadow: none;
+  }
+}

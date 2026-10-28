@@ -1,0 +1,87 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: calc(11 * var(--u));
+  border: 1px solid var(--border);
+  border-radius: calc(17 * var(--u));
+  box-shadow: inset 0 2px 3px #0003;
+  background: #fff;
+}
+.photo {
+  width: 100%;
+  aspect-ratio: 1.7;
+  border-radius: calc(22 * var(--u));
+  object-fit: cover;
+  object-position: center bottom;
+}
+.details {
+  position: relative;
+  padding: calc(28 * var(--u)) 0 0;
+  font-size: max(13px, calc(24 * var(--u)));
+  font-weight: 500;
+}
+.details h2 {
+  font-size: max(20px, calc(40 * var(--u)));
+  font-weight: 500;
+  padding-right: calc(136 * var(--u));
+  margin-bottom: calc(13 * var(--u));
+}
+.details p {
+  margin-bottom: calc(16 * var(--u));
+}
+.details time {
+  display: block;
+  margin-bottom: calc(16 * var(--u));
+}
+.species {
+  position: absolute;
+  width: calc(136 * var(--u));
+  height: calc(136 * var(--u));
+  object-fit: contain;
+  right: 0;
+  top: 0;
+}
+.button {
+  width: 92%;
+  align-self: center;
+  margin: calc(34 * var(--u)) 0 calc(11 * var(--u));
+  min-height: calc(87 * var(--u));
+  font-size: max(18px, calc(40 * var(--u)));
+  border-radius: calc(23 * var(--u));
+  background: #625f5f;
+}
+@media (max-width: 900px) {
+  .card {
+    padding: 10px;
+  }
+  .photo {
+    height: auto;
+  }
+  .details {
+    padding: 20px 4px 0;
+  }
+  .details h2 {
+    font-size: 20px;
+    padding-right: 64px;
+    margin-bottom: 12px;
+  }
+  .details {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .species {
+    width: 64px;
+    height: 64px;
+    top: 10px;
+  }
+  .details p,
+  .details time {
+    margin-bottom: 10px;
+  }
+  .button {
+    min-height: 48px;
+    margin-top: 18px;
+    font-size: 20px;
+  }
+}

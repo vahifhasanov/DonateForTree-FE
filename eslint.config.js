@@ -25,6 +25,14 @@ export default defineConfig([
     },
   },
   {
+    files: ['cypress/**/*.{js,jsx}'],
+    languageOptions: {
+      globals: {
+        expect: 'readonly',
+      },
+    },
+  },
+  {
     files: ['cypress.config.js'],
     languageOptions: {
       globals: globals.node,
