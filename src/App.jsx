@@ -1,11 +1,12 @@
 import { useEffect, useRef } from 'react'
-import { Link, Route, Routes, useLocation } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import Header from './components/Header.jsx'
 import Home from './pages/Home.jsx'
 import Auth from './pages/Auth.jsx'
 import Trees from './pages/Trees.jsx'
 import Plant from './pages/Plant.jsx'
 import Map from './pages/Map.jsx'
+import NotFound from './pages/NotFound.jsx'
 import styles from './App.module.css'
 
 const titles = {
@@ -22,7 +23,7 @@ export default function App() {
   const main = useRef(null)
   const previousPath = useRef(pathname)
   useEffect(() => {
-    document.title = `${titles[pathname] ?? 'Page not found'} · DonateForTree`
+    document.title = `${titles[pathname.replace(/\/+$/, '') || '/'] ?? '404 — Сторінку не знайдено'} · DonateForTree`
     if (previousPath.current !== pathname) {
       window.scrollTo(0, 0)
       main.current?.focus()
@@ -43,16 +44,7 @@ export default function App() {
           <Route path="/plant" element={<Plant />} />
           <Route path="/login" element={<Auth key="login" />} />
           <Route path="/signup" element={<Auth key="signup" signup />} />
-          <Route
-            path="*"
-            element={
-              <section className={styles.notFound}>
-                <h1>Page not found</h1>
-                <p>This page is not part of DonateForTree.</p>
-                <Link to="/">Back to home</Link>
-              </section>
-            }
-          />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
     </div>

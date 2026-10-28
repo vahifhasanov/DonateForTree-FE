@@ -1,16 +1,63 @@
-# React + Vite
+﻿# DonateForTree
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Навчальний React-проєкт з інтерфейсом ініціативи висаджування дерев.
+Попередні сторінки зберігають англомовний дизайн макета; сторінка 404 українською.
+Форми, карта, статистика та платежі — демонстраційні, без серверних операцій.
 
-Currently, two official plugins are available:
+## Запуск і перевірки
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Потрібен Node.js 22.12+ (перевірено на Node.js 24).
 
-## React Compiler
+```sh
+npm ci
+npm run dev -- --host 127.0.0.1 --port 5174
+npm run lint
+npm run test:unit
+npm run build
+npm run format:check
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+В іншому терміналі, поки працює Vite:
 
-## Expanding the ESLint configuration
+```sh
+npm run test:e2e -- --browser chrome
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Лише перевірки лабораторної №5:
+
+```sh
+npm run test:e2e -- --browser chrome --spec cypress/e2e/routing.cy.js
+```
+
+## Маршрути (лабораторна №5)
+
+| URL       | Призначення                                      |
+| --------- | ------------------------------------------------ |
+| `/`       | Головна сторінка                                 |
+| `/map`    | Демонстраційна карта дерев                       |
+| `/trees`  | Колекція дерев та статистика                     |
+| `/plant`  | Вибір параметрів висаджування                    |
+| `/login`  | Форма входу                                      |
+| `/signup` | Форма реєстрації                                 |
+| `*`       | Українська сторінка 404 з поверненням на головну |
+
+React Router DOM уже було підключено в попередній роботі; нові залежності не потрібні.
+`src/main.jsx` обгортає застосунок у `BrowserRouter`, а `src/App.jsx`
+містить `Routes`/`Route` та спільну структуру з Header і main.
+Footer є частиною головної сторінки відповідно до попереднього макета.
+Внутрішні переходи виконують `Link`/`NavLink`, зокрема спільний компонент Button.
+`NavLink` позначає активний пункт через `aria-current="page"`.
+Після зміни шляху оновлюється заголовок вкладки, фокус переходить до main,
+сторінка прокручується догори, мобільне меню закривається.
+
+`src/pages/NotFound.jsx` обробляє невідомі URL через fallback `*`.
+Він показує 404, українське пояснення й кнопку-посилання на `/`.
+Оформлення використовує кольори, градієнт, шрифт і Button наявного сайту.
+
+Vite у режимі розробки підтримує пряме відкриття та оновлення внутрішніх URL.
+Для production-хостингу потрібно налаштувати повернення `index.html` для шляхів SPA.
+Сторінка 404 є клієнтською; HTTP-статус відповіді dev-сервера залишається 200.
+
+Vitest перевіряє рендеринг сторінок і невідомих маршрутів. Cypress перевіряє
+прямі URL, оновлення, активні посилання, історію Назад/Вперед, збереження
+того самого документа при переходах, повернення з 404 та адаптивність.

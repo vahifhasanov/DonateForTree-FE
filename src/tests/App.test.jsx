@@ -32,8 +32,21 @@ describe('DonateForTree pages', () => {
     expect(html).toContain('href="/trees"')
     expect(html).toContain('href="/plant"')
   })
-  test('unknown URLs have a usable home link', () => {
-    expect(renderRoute('/missing')).toContain('Back to home')
+  test.each([
+    '/missing',
+    '/unknown',
+    '/something-random',
+    '/page-that-does-not-exist',
+    '/trees/missing',
+  ])('unknown URL %s renders Ukrainian 404 with a usable home link', (path) => {
+    const html = renderRoute(path)
+    expect(html).toContain('>404</p>')
+    expect(html).toContain('Сторінку не знайдено</h1>')
+    expect(html).toContain(
+      'На жаль, такої сторінки не існує або її було переміщено',
+    )
+    expect(html).toMatch(/<a[^>]*href="\/"[^>]*>Повернутися на головну<\/a>/)
+    expect(html).toContain('lang="uk"')
   })
   test('planting and authentication clearly identify the unavailable operations', () => {
     expect(renderRoute('/plant')).toContain(

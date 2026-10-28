@@ -1,0 +1,33 @@
+.page {
+  min-height: 75svh;
+  padding: clamp(48px, 8vw, 120px) 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  background: var(--page-background);
+  text-align: center;
+}
+.code {
+  color: var(--teal);
+  font-size: clamp(96px, 18vw, 220px);
+  font-weight: 500;
+  line-height: 1;
+}
+.page h1 {
+  font-size: clamp(26px, 4vw, 48px);
+  overflow-wrap: anywhere;
+}
+.description {
+  max-width: 560px;
+  font-size: 18px;
+  line-height: 1.6;
+}
+.home {
+  max-width: 100%;
+  padding: 16px 24px;
+  font-size: 20px;
+  border-radius: 28px;
+  background: var(--teal);
+}
