@@ -9,7 +9,7 @@
 describe('Lab 5 client routing', () => {
   routes.forEach(([path, heading]) => {
     it(`opens and reloads ${path} directly`, () => {
-      cy.visit(path)
+      cy.visitDemo(path)
       cy.contains('h1', heading).should('be.visible')
       cy.reload()
       cy.location('pathname').should('eq', path)
@@ -19,7 +19,7 @@ describe('Lab 5 client routing', () => {
     })
   })
   it('preserves the document across navigation, back and forward', () => {
-    cy.visit('/')
+    cy.visitDemo('/trees')
     cy.window().then((win) => {
       win.__routingMarker = 'same-document'
     })
@@ -40,7 +40,7 @@ describe('Lab 5 client routing', () => {
     '/trees/missing',
   ].forEach((path) => {
     it(`shows 404 at ${path} and returns home without reloading`, () => {
-      cy.visit(path)
+      cy.visitDemo(path)
       cy.reload()
       cy.window().then((win) => {
         win.__routingMarker = 'same-document'

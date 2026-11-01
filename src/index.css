@@ -70,6 +70,115 @@ fieldset {
   background: #c0e8d0;
   color: #000;
 }
+.request-state {
+  padding: 24px;
+  line-height: 1.6;
+}
+.request-state button,
+.request-state a {
+  margin-top: 16px;
+  font-size: 18px;
+}
+.form-error {
+  color: #a01f27;
+  background: #fff0f0;
+  border-radius: 10px;
+  padding: 16px;
+  margin-top: 20px;
+  line-height: 1.5;
+}
+.tree-filters {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
+  align-items: end;
+  gap: 18px;
+  margin-bottom: 28px;
+}
+.tree-filters label {
+  font-size: 16px;
+}
+.tree-filters [name] {
+  font-size: 16px;
+  height: 48px;
+  min-height: 44px;
+  padding: 0 12px;
+}
+.reset-filters {
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid #09694d;
+  border-radius: 10px;
+  color: #09694d;
+  background: #fff;
+}
+.map-frame {
+  position: relative;
+  min-width: 0;
+  border-radius: 24px;
+  overflow: hidden;
+  isolation: isolate;
+  min-height: 620px;
+}
+.leaflet-map {
+  position: absolute;
+  inset: 0;
+  background: #d6e4df;
+  font-family: 'Inter', sans-serif;
+}
+.map-message {
+  position: absolute;
+  z-index: 1000;
+  inset: 0;
+  background: #eef5ef;
+  display: grid;
+  place-items: center;
+}
+.tile-error {
+  position: absolute;
+  z-index: 1000;
+  left: 55px;
+  right: 12px;
+  top: 12px;
+  padding: 12px;
+  background: #fffbe8;
+  border-radius: 8px;
+  font-size: 14px;
+}
+.tree-marker {
+  background: #075c38;
+  color: white;
+  border: 3px solid white;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px #0005;
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+  font-size: 16px;
+}
+.leaflet-container .leaflet-popup-content {
+  line-height: 1.5;
+}
+.leaflet-container .leaflet-popup-content p {
+  margin: 8px 0;
+}
+.leaflet-container a {
+  color: #075c38;
+}
+@media (max-width: 1100px) {
+  .tree-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 900px) {
+  .map-frame {
+    min-height: 430px;
+  }
+}
+@media (max-width: 500px) {
+  .tree-filters {
+    grid-template-columns: 1fr;
+  }
+}
 @media (max-width: 900px) {
   :root {
     --u: 0.55px;

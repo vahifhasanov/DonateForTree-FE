@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "api": "node mock/server.js",
+    "dev:all": "node scripts/dev.js",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
@@ -12,7 +14,7 @@
     "format:check": "prettier --check .",
     "prepare": "husky",
     "test": "vitest",
-    "test:unit": "vitest run",
+    "test:unit": "vitest run --exclude cypress/**",
     "test:e2e": "cypress run"
   },
   "dependencies": {

@@ -29,6 +29,7 @@ export default defineConfig([
     languageOptions: {
       globals: {
         expect: 'readonly',
+        Cypress: 'readonly',
       },
     },
   },

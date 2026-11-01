@@ -1,12 +1,52 @@
-import { useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { useRef, useState } from 'react'
+import { Link, Navigate, useLocation } from 'react-router-dom'
 import Button from '../components/Button.jsx'
 import FormField from '../components/FormField.jsx'
 import plant from '../../img/plant.png'
 import styles from './Auth.module.css'
+import { useAuth } from '../hooks/useAuth.js'
+import { useMutation } from '../hooks/useMutation.js'
+import { validateCredentials } from '../utils/trees.js'
+import RequestState from '../components/RequestState.jsx'
 
 export default function Auth({ signup = false }) {
   const help = useRef(null)
+  const { user, status, error: sessionError, retry, login } = useAuth()
+  const { state } = useLocation()
+  const [validation, setValidation] = useState('')
+  const { mutate, loading, error } = useMutation(login)
+  const destination =
+    typeof state?.from === 'string' && /^\/(?!\/)/.test(state.from)
+      ? state.from
+      : '/trees'
+  async function submit(event) {
+    event.preventDefault()
+    const values = Object.fromEntries(new FormData(event.currentTarget))
+    const message =
+      validateCredentials(values, signup) ||
+      (signup && values.password !== values['confirm-password']
+        ? 'Passwords do not match.'
+        : '')
+    setValidation(message)
+    if (!message)
+      await mutate(
+        {
+          name: values.name?.trim(),
+          email: values.email.trim().toLowerCase(),
+          password: values.password,
+        },
+        signup,
+      )
+  }
+  if (status === 'loading' || sessionError)
+    return (
+      <RequestState
+        loading={status === 'loading'}
+        error={sessionError}
+        retry={retry}
+      />
+    )
+  if (user) return <Navigate to={destination} replace />
   return (
     <section
       className={`${styles.page} ${signup ? styles.signup : ''}`}
@@ -55,7 +95,7 @@ export default function Auth({ signup = false }) {
           className={styles.card}
           aria-labelledby="form-heading"
           aria-describedby="auth-demo"
-          onSubmit={(event) => event.preventDefault()}
+          onSubmit={submit}
         >
           <h2 id="form-heading">{signup ? 'Sign up' : 'Log in'}</h2>
           <div className={styles.fields}>
@@ -66,6 +106,8 @@ export default function Auth({ signup = false }) {
                 autoComplete="name"
                 placeholder="Vagif Hasanov"
                 required
+                minLength={2}
+                maxLength={60}
               />
             )}
             <FormField
@@ -75,6 +117,7 @@ export default function Auth({ signup = false }) {
               autoComplete="email"
               placeholder="example@email.com *"
               required
+              maxLength={254}
             />
             <FormField
               label="Password"
@@ -83,6 +126,8 @@ export default function Auth({ signup = false }) {
               autoComplete={signup ? 'new-password' : 'current-password'}
               placeholder="****************"
               required
+              minLength={8}
+              maxLength={128}
             />
             {signup && (
               <FormField
@@ -104,24 +149,35 @@ export default function Auth({ signup = false }) {
               FORGOT PASSWORD?
             </button>
           )}
-          <Button type="submit" className={styles.submit}>
-            {signup ? 'Create account' : 'Log in'}
+          {(validation || error) && (
+            <p className="form-error" role="alert">
+              {validation || error}
+            </p>
+          )}
+          <Button type="submit" className={styles.submit} disabled={loading}>
+            {loading ? 'Please wait…' : signup ? 'Create account' : 'Log in'}
           </Button>
           <p className={styles.switch}>
             {signup ? (
               <>
-                Already have an account? <Link to="/login">LOG IN</Link>
+                Already have an account?{' '}
+                <Link to="/login" state={state}>
+                  LOG IN
+                </Link>
               </>
             ) : (
               <>
-                Don’t have an account? <Link to="/signup">SIGN UP</Link>
+                Don’t have an account?{' '}
+                <Link to="/signup" state={state}>
+                  SIGN UP
+                </Link>
               </>
             )}
           </p>
         </form>
         <p id="auth-demo" className={styles.demo}>
-          Interface demo. {signup ? 'Account creation' : 'Authentication'} is
-          unavailable; nothing is sent or saved.
+          Local demo authentication. Use fictional details only, with a password
+          of 8–128 characters. Demo account: demo@example.com / DemoTree2026!
         </p>
       </div>
       <img className={styles.plant} src={plant} alt="" />
