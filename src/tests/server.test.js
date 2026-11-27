@@ -1,12 +1,12 @@
 ﻿import { afterAll, beforeAll, describe, expect, test } from 'vitest'
 import { mkdtempSync, readFileSync, rmSync, mkdirSync } from 'node:fs'
 import { resolve } from 'node:path'
-import { createDemoApi } from '../../mock/server.js'
+import { createApi } from '../../server/index.js'
 import { filterTrees, treeStats } from '../utils/trees.js'
 
 let server, base, directory, database, token, createdId
 async function start() {
-  server = createDemoApi(database)
+  server = createApi(database)
   await new Promise((done) => server.listen(0, '127.0.0.1', done))
   base = `http://127.0.0.1:${server.address().port}`
 }
@@ -33,8 +33,8 @@ afterAll(async () => {
   if (directory) rmSync(directory, { recursive: true, force: true })
 })
 
-describe('Live local HTTP API', () => {
-  test('GET starts empty and and blocks private database endpoints', async () => {
+describe('Express HTTP API', () => {
+  test('GET starts empty and blocks private database endpoints', async () => {
     expect((await call('/trees')).data).toEqual([])
     expect((await call('/users')).status).toBe(404)
     expect((await call('/db')).status).toBe(404)

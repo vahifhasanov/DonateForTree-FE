@@ -73,7 +73,7 @@ export async function request(
     throw new ApiError(
       timeout.signal.aborted
         ? 'The API took too long to respond. Please try again.'
-        : 'Cannot reach the API. Check your connection and start the demo API.',
+        : 'Cannot reach the API. Check your connection and start the Express API.',
     )
   } finally {
     clearTimeout(timer)
