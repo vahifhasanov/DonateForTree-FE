@@ -8,25 +8,34 @@ import plant from '../../img/plant.png'
 import people from '../../img/ppl.png'
 import flag from '../../img/flag.png'
 import bird from '../../img/bird.png'
+import { useAuth } from '../hooks/useAuth.js'
+import { useTrees } from '../hooks/useTrees.js'
+import { treeStats } from '../utils/trees.js'
 
 export default function Home() {
+  const { user } = useAuth()
+  const { data, loading, error, refetch } = useTrees()
   return (
     <>
       <section className={styles.hero} aria-labelledby="home-heading">
         <img src={sky} className={styles.sky} alt="" />
         <h1 id="home-heading" className={styles.heading}>
-          <Link to="/login">LOGIN</Link>
+          <Link to={user ? '/trees' : '/login'}>
+            {user ? 'MY TREES' : 'LOGIN'}
+          </Link>
           <span>
             <span>or</span>{' '}
             <Link
               className={styles.arrowLink}
-              to="/signup"
+              to={user ? '/plant' : '/signup'}
               aria-label="Join DonateForTree"
             >
               ›
             </Link>
           </span>
-          <Link to="/signup">REGISTER</Link>
+          <Link to={user ? '/plant' : '/signup'}>
+            {user ? 'PLANT' : 'REGISTER'}
+          </Link>
         </h1>
         <p className={styles.callout}>click on the tree for donation</p>
         <Link
@@ -71,8 +80,18 @@ export default function Home() {
         </Button>
         <div className={styles.count}>
           <p>Trees count</p>
-          <p className={styles.number}>2152</p>
-          <small>Demo data</small>
+          <p className={styles.number} aria-live="polite">
+            {loading ? '…' : error ? '—' : treeStats(data).count}
+          </p>
+          <small>
+            {error ? (
+              <button type="button" onClick={refetch}>
+                API unavailable · Retry
+              </button>
+            ) : (
+              'Saved demo trees'
+            )}
+          </small>
           <img src={bird} alt="" />
         </div>
       </section>
@@ -98,7 +117,8 @@ export default function Home() {
             <br />
             Explore our planting initiative and tree collection.
             <br />
-            This laboratory project uses static demonstration data.
+            This laboratory project saves demonstration plantings through a
+            local HTTP API.
           </p>
         </div>
       </section>

@@ -1,4 +1,4 @@
-const pages = [
+﻿const pages = [
   ['/', 'LOGIN'],
   ['/map', 'Tree map'],
   ['/trees', 'My trees'],
@@ -12,7 +12,7 @@ function checkLayout() {
     expect(doc.documentElement.scrollWidth).to.be.at.most(
       doc.documentElement.clientWidth,
     )
-    doc.querySelectorAll('img').forEach((image) => {
+    doc.querySelectorAll('img:not(.leaflet-tile)').forEach((image) => {
       expect(
         image.complete && image.naturalWidth > 0,
         image.getAttribute('src'),
@@ -101,10 +101,10 @@ describe('Design pages and responsive layout', () => {
     pages.forEach(([path, heading]) => {
       it(`${path} displays at ${width}px without horizontal overflow or missing images`, () => {
         cy.viewport(width, height)
-        cy.visit(path)
+        cy.visitDemo(path)
         cy.contains('h1', heading).should('be.visible')
         cy.document().then((doc) => doc.fonts.ready)
-        cy.get('img').should(($images) => {
+        cy.get('img:not(.leaflet-tile)').should(($images) => {
           $images.each((_, image) =>
             expect(image.complete && image.naturalWidth > 0).to.equal(true),
           )
@@ -120,12 +120,12 @@ describe('Design pages and responsive layout', () => {
 })
 describe('Navigation and interface interactions', () => {
   it('navigates between all pages, supports browser history and reloads direct routes', () => {
-    cy.visit('/')
+    cy.visitDemo('/plant')
     cy.get('nav').contains('a', 'your trees').click()
     cy.location('pathname').should('eq', '/trees')
     cy.contains('h1', 'My trees').should('be.visible')
     cy.get('main').should('have.focus')
-    cy.get('a[aria-label="View tree 2351 on map"]').click()
+    cy.get('nav a[href="/map"]').click()
     cy.location('pathname').should('eq', '/map')
     cy.reload()
     cy.contains('h1', 'Tree map').should('be.visible')
@@ -134,7 +134,7 @@ describe('Navigation and interface interactions', () => {
     cy.get('nav').contains('a', 'plant a tree').click()
     cy.contains('h1', 'Plant a tree').should('be.visible')
     cy.get('summary').click()
-    cy.contains('a', 'Log in').click()
+    cy.contains('button', 'Log out').click()
     cy.location('pathname').should('eq', '/login')
     cy.get('main').contains('a', 'SIGN UP').click()
     cy.location('pathname').should('eq', '/signup')
@@ -158,7 +158,7 @@ describe('Navigation and interface interactions', () => {
     cy.get('button[aria-controls="navigation"]').should('have.focus')
     cy.contains('button', 'Menu').click()
     cy.get('nav').contains('a', 'your trees').click()
-    cy.location('pathname').should('eq', '/trees')
+    cy.location('pathname').should('eq', '/login')
     cy.get('nav').should('not.be.visible')
   })
   it('toggles password visibility and displays an accessible recovery dialog', () => {
@@ -172,71 +172,6 @@ describe('Navigation and interface interactions', () => {
     cy.get('dialog').should('be.visible').and('have.attr', 'open')
     cy.get('dialog').contains('button', 'Close').click()
     cy.get('dialog').should('not.be.visible')
-  })
-  it('keeps auth forms on the same page without requests, saved data or success messages', () => {
-    cy.visit('/login')
-    cy.window().then((win) => {
-      win.__documentMarker = 'unchanged'
-      cy.spy(win, 'fetch').as('fetch')
-      cy.spy(win.Storage.prototype, 'setItem').as('save')
-    })
-    cy.get('input[name="email"]').type('demo@example.com')
-    cy.get('input[name="password"]').type('demonstration')
-    cy.get('form')
-      .contains('button', /^Log in$/)
-      .click()
-    cy.window().its('__documentMarker').should('eq', 'unchanged')
-    cy.location('pathname').should('eq', '/login')
-    cy.get('@fetch').should('not.have.been.called')
-    cy.get('@save').should('not.have.been.called')
-    cy.contains('nothing is sent or saved').should('be.visible')
-    cy.get('main').contains('a', 'SIGN UP').click()
-    cy.get('input[name="name"]').type('Demo User')
-    cy.get('input[name="email"]').type('demo@example.com')
-    cy.get('input[name="password"]').type('demonstration')
-    cy.get('input[name="confirm-password"]').type('demonstration')
-    cy.get('form').contains('button', 'Create account').click()
-    cy.location('pathname').should('eq', '/signup')
-    cy.get('@fetch').should('not.have.been.called')
-    cy.get('@save').should('not.have.been.called')
-  })
-  it('only previews planting options and leaves counters unchanged', () => {
-    cy.visit('/plant')
-    cy.window().then((win) => {
-      win.__documentMarker = 'unchanged'
-      cy.spy(win, 'fetch').as('fetch')
-      cy.spy(win.Storage.prototype, 'setItem').as('save')
-    })
-    cy.get('input[name="amount"][value="5"]')
-      .check({ force: true })
-      .should('be.checked')
-    cy.get('input[name="species"][value="Maple"]')
-      .check({ force: true })
-      .should('be.checked')
-    cy.get('form').contains('button', 'Plant tree').click()
-    cy.window().its('__documentMarker').should('eq', 'unchanged')
-    cy.get('@fetch').should('not.have.been.called')
-    cy.get('@save').should('not.have.been.called')
-    cy.get('nav').contains('a', 'your trees').click()
-    cy.contains('dd', '1800 UAH').should('be.visible')
-    cy.contains('button', 'By region')
-      .click()
-      .should('have.attr', 'aria-pressed', 'true')
-    cy.contains('h2', 'Uzhorod · Zakarpattia oblast').should('be.visible')
-    cy.get('nav').contains('a', 'home').click()
-    cy.contains('p', '2152').should('be.visible')
-    cy.wait(3500)
-    cy.contains('p', '2152').should('be.visible')
-  })
-  it('submits map controls without reloading or changing the static preview', () => {
-    cy.visit('/map')
-    cy.window().then((win) => {
-      win.__documentMarker = 'unchanged'
-    })
-    cy.get('select[name="species"]').select('Oak')
-    cy.contains('button', 'Apply filters').click()
-    cy.window().its('__documentMarker').should('eq', 'unchanged')
-    cy.contains('span', '52').should('be.visible')
   })
   it('provides a keyboard skip link and a usable not-found page', () => {
     cy.visit('/')

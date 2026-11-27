@@ -76,7 +76,23 @@
 }
 .profile {
   position: relative;
-  margin-left: calc(140 * var(--u));
+  margin-left: 12px;
+}
+.userName {
+  display: block;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: max(16px, calc(26 * var(--u)));
+}
+.profileMenu button {
+  margin-top: 16px;
+  min-height: 44px;
+  background: #fff;
+  border: 1px solid #777;
+  border-radius: 8px;
+  padding: 8px 16px;
 }
 .profile summary > span:last-child {
   width: 0.45em;

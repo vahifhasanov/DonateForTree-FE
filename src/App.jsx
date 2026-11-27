@@ -7,6 +7,7 @@ import Trees from './pages/Trees.jsx'
 import Plant from './pages/Plant.jsx'
 import Map from './pages/Map.jsx'
 import NotFound from './pages/NotFound.jsx'
+import ProtectedRoute from './components/ProtectedRoute.jsx'
 import styles from './App.module.css'
 
 const titles = {
@@ -40,8 +41,22 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/map" element={<Map />} />
-          <Route path="/trees" element={<Trees />} />
-          <Route path="/plant" element={<Plant />} />
+          <Route
+            path="/trees"
+            element={
+              <ProtectedRoute>
+                <Trees />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/plant"
+            element={
+              <ProtectedRoute>
+                <Plant />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/login" element={<Auth key="login" />} />
           <Route path="/signup" element={<Auth key="signup" signup />} />
           <Route path="*" element={<NotFound />} />

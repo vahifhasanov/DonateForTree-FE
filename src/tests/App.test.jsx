@@ -4,11 +4,19 @@ import { MemoryRouter } from 'react-router-dom'
 import App from '../App.jsx'
 import FormField from '../components/FormField.jsx'
 import Button from '../components/Button.jsx'
+import { AuthContext } from '../context/auth-context.js'
 
-function renderRoute(path) {
+function renderRoute(path, signedIn = ['/trees', '/plant'].includes(path)) {
   return renderToStaticMarkup(
     <MemoryRouter initialEntries={[path]}>
-      <App />
+      <AuthContext.Provider
+        value={{
+          user: signedIn ? { id: 'demo', name: 'Demo Gardener' } : null,
+          status: 'ready',
+        }}
+      >
+        <App />
+      </AuthContext.Provider>
     </MemoryRouter>,
   )
 }
@@ -48,12 +56,14 @@ describe('DonateForTree pages', () => {
     expect(html).toMatch(/<a[^>]*href="\/"[^>]*>Повернутися на головну<\/a>/)
     expect(html).toContain('lang="uk"')
   })
-  test('planting and authentication clearly identify the unavailable operations', () => {
-    expect(renderRoute('/plant')).toContain(
-      'Payments and planting are unavailable',
-    )
-    expect(renderRoute('/login')).toContain('Authentication')
-    expect(renderRoute('/signup')).toContain('nothing is sent or saved')
+  test('planting and authentication disclose the demo model', () => {
+    expect(renderRoute('/plant')).toContain('No real payment')
+    expect(renderRoute('/login')).toContain('Local demo authentication')
+    expect(renderRoute('/signup')).toContain('Use fictional details only')
+  })
+  test('private pages do not render planting or personal data for guests', () => {
+    expect(renderRoute('/plant', false)).not.toContain('Review planting')
+    expect(renderRoute('/trees', false)).not.toContain('Demo contributions')
   })
 })
 describe('Reusable controls', () => {

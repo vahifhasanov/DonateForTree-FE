@@ -1,55 +1,52 @@
-import Button from '../components/Button.jsx'
-import FormField from '../components/FormField.jsx'
-import image from '../assets/design/map.png'
+﻿import { useSearchParams } from 'react-router-dom'
+import TreeMap from '../components/TreeMap.jsx'
+import TreeFilters from '../components/TreeFilters.jsx'
+import RequestState from '../components/RequestState.jsx'
+import { useTrees } from '../hooks/useTrees.js'
+import { useTreeFilters } from '../hooks/useTreeFilters.js'
+import { treeStats } from '../utils/trees.js'
 import styles from './Map.module.css'
+
 export default function Map() {
+  const { data, loading, error, refetch } = useTrees()
+  const controls = useTreeFilters(data)
+  const [params, setParams] = useSearchParams()
+  const selectedId = params.get('tree')
+  const selected = data.find((tree) => tree.id === selectedId)
   return (
     <section className={styles.page}>
-      <div
-        className={styles.map}
-        role="img"
-        aria-label="Static map of Ukraine with demonstration clusters of 52, 34 and 10 trees"
-      >
-        <div className={styles.mapScene}>
-          <img src={image} alt="" />
-          <span className={styles.large}>52</span>
-          <span className={styles.medium}>34</span>
-          <span className={styles.small}>10</span>
-        </div>
-      </div>
-      <form
-        className={styles.filters}
-        aria-labelledby="map-heading"
-        aria-describedby="map-demo"
-        onSubmit={(event) => event.preventDefault()}
-      >
+      <aside className={styles.filters} aria-labelledby="map-heading">
         <h1 id="map-heading">Tree map</h1>
-        <FormField
-          className={styles.location}
-          label="Location"
-          type="search"
-          name="location"
-          placeholder="Select location..."
-        />
-        <FormField label="Region" name="region">
-          <option value="">All regions</option>
-          <option value="zakarpattia">Zakarpattia oblast</option>
-        </FormField>
-        <FormField label="Tree species" name="species">
-          <option value="">All species</option>
-          <option>Oak</option>
-          <option>Maple</option>
-          <option>Pine</option>
-        </FormField>
-        <FormField label="Year" name="year">
-          <option value="">All years</option>
-          <option>2026</option>
-        </FormField>
-        <Button type="submit">Apply filters</Button>
-        <p id="map-demo" className={styles.demo}>
-          Static map preview. Filters do not query or update data.
+        <TreeFilters controls={controls} />
+        <RequestState loading={loading} error={error} retry={refetch} />
+        {!loading && !error && (
+          <p role="status">
+            {controls.filtered.length
+              ? `${treeStats(controls.filtered).count} trees in ${controls.filtered.length} planting groups`
+              : 'No trees match your filters.'}
+          </p>
+        )}
+        {selectedId && !loading && !error && (
+          <div className={styles.selection}>
+            <p>
+              {!selected
+                ? 'The requested planting was not found.'
+                : controls.filtered.some((tree) => tree.id === selectedId)
+                  ? `Showing selected ${selected.species} planting.`
+                  : 'The selected planting is hidden by your filters.'}
+            </p>
+            <button type="button" onClick={() => setParams({})}>
+              Clear selected planting
+            </button>
+          </div>
+        )}
+        <p className={styles.demo}>
+          Approximate demo coordinates in Ukraine. These are not confirmed real
+          planting locations. Drag to move, scroll or use +/− to zoom. Markers
+          support keyboard focus and Enter.
         </p>
-      </form>
+      </aside>
+      <TreeMap trees={controls.filtered} selectedId={selectedId} />
     </section>
   )
 }

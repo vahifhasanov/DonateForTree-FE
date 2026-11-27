@@ -96,6 +96,12 @@
   color: #454545;
   line-height: 1.5;
 }
+.treeGroup + .treeGroup {
+  margin-top: 32px;
+}
+.stat dd {
+  overflow-wrap: anywhere;
+}
 @media (max-width: 900px) {
   .page {
     min-height: calc(100svh - 64px);

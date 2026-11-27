@@ -144,6 +144,42 @@
   background: #625f5f;
   font-size: max(20px, calc(46 * var(--u)));
 }
+.summary,
+.review {
+  margin-top: 28px;
+  line-height: 1.6;
+}
+.summary {
+  font-size: 22px;
+  font-weight: 500;
+}
+.review {
+  border: 1px solid #09694d;
+  border-radius: 16px;
+  padding: 20px;
+}
+.review button {
+  font-size: 18px;
+  margin-top: 16px;
+}
+.success {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+}
+.success h2,
+.success p {
+  width: 100%;
+  line-height: 1.5;
+}
+.success a,
+.success button {
+  font-size: 18px;
+}
+.species .speciesName {
+  font-size: 16px;
+}
 @media (max-width: 900px) {
   .page {
     min-height: calc(100svh - 64px);

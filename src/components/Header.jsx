@@ -1,12 +1,15 @@
 import { useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import styles from './Header.module.css'
+import { useAuth } from '../hooks/useAuth.js'
+import { useMutation } from '../hooks/useMutation.js'
 
 export default function Header() {
   const [open, setOpen] = useState(false)
   const toggle = useRef(null)
   const { pathname } = useLocation()
-  const demoProfile = ['/trees', '/plant', '/map'].includes(pathname)
+  const { user, logout } = useAuth()
+  const signout = useMutation(logout)
   function closeWithEscape(event) {
     if (event.key === 'Escape' && open) {
       setOpen(false)
@@ -47,16 +50,23 @@ export default function Header() {
         <NavLink to="/map">map</NavLink>
         <NavLink to="/trees">your trees</NavLink>
         <NavLink to="/plant">plant a tree</NavLink>
-        {demoProfile ? (
+        {user ? (
           <details className={styles.profile}>
             <summary>
               <span className={styles.person} aria-hidden="true" />
-              Vagif <span aria-hidden="true">⌄</span>
+              <span className={styles.userName}>{user.name}</span>{' '}
+              <span aria-hidden="true">⌄</span>
             </summary>
             <div className={styles.profileMenu}>
-              <p>Demo profile</p>
-              <Link to="/login">Log in</Link>
-              <Link to="/signup">Sign up</Link>
+              <p>Demo account</p>
+              <Link to="/trees">My trees</Link>
+              <button
+                type="button"
+                disabled={signout.loading}
+                onClick={() => signout.mutate()}
+              >
+                {signout.loading ? 'Logging out…' : 'Log out'}
+              </button>
             </div>
           </details>
         ) : (
